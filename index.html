@@ -139,30 +139,7 @@ table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid 
 .print-top{display:grid;grid-template-columns:1fr 1.45fr 1.08fr;gap:1.5mm;align-items:start}
 .print-col{display:grid;gap:1.5mm;align-content:start;min-width:0}
 .print-stage{border:1px solid #cbd7e3;border-radius:5px;padding:2mm;min-width:0;overflow:hidden}
-@media print{
-  @page{size:A4 landscape;margin:5mm}
-  html,body{background:#fff!important;margin:0!important;padding:0!important;min-height:auto!important;display:block!important}
-  body>*:not(#lkmPrintDocument){display:none!important}
-  #lkmPrintDocument{display:block!important;width:287mm!important;max-height:200mm!important;overflow:hidden!important;color:#17263a!important;font-family:Arial,Helvetica,sans-serif!important;font-size:5.7pt!important;line-height:1.10!important}
-  #lkmPrintDocument *{box-sizing:border-box}
-  .print-lkm-header{display:grid;grid-template-columns:1.65fr 1fr;gap:4mm;align-items:end;border-bottom:1.5px solid #174f97;padding-bottom:1.5mm;margin-bottom:2mm}
-  .print-lkm-header h1{font-size:11pt;line-height:1.05;margin:0 0 1mm;color:#123c70}.print-lkm-header p{margin:.5mm 0;font-size:5.9pt;color:#475b70}
-  .print-lkm-meta{display:grid;grid-template-columns:1fr 1fr;gap:1mm 3mm;margin:0;padding:1.2mm 1.8mm;border:1px solid #ccd8e4;border-radius:4px}.print-lkm-meta div{font-size:5.7pt}.print-lkm-line{display:inline-block;min-width:25mm;border-bottom:.5px solid #7b8793;height:2.5mm;vertical-align:bottom}
-  .print-top,.print-col{gap:1.2mm}
-  .print-stage{padding:1.5mm;border-radius:4px;break-inside:avoid;page-break-inside:avoid}
-  .print-stage[data-print-stage="5"]{margin-top:0;display:grid;grid-template-columns:1fr 1fr;gap:.8mm 1.2mm;align-items:start}
-  .print-stage[data-print-stage="5"]>.print-badge,.print-stage[data-print-stage="5"]>h2,.print-stage[data-print-stage="5"]>.print-activity:first-of-type{grid-column:1/-1}
-  .print-stage[data-print-stage="5"]>.print-activity:first-of-type{display:grid;grid-template-columns:11mm 1fr 11mm 1fr;gap:.45mm .8mm;align-items:start}
-  .print-stage[data-print-stage="5"]>.print-activity:first-of-type>h4{grid-column:1/-1}
-  .print-stage[data-print-stage="5"]>.print-activity:first-of-type>p{margin:.4mm 0;font-weight:700}
-  .print-stage[data-print-stage="5"]>.print-activity:first-of-type>.print-answer{margin:.2mm 0;min-height:3.5mm}
-  .print-stage h2{font-size:7.3pt;color:#12467f;margin:0 0 1mm;line-height:1.05}.print-stage h4{font-size:6.2pt;margin:1mm 0 .5mm;color:#263a4f}.print-stage p{margin:.5mm 0 .8mm}
-  .print-badge{display:inline-block;padding:.4mm 1.2mm;border:1px solid #c8d9ea;border-radius:999px;font-size:5.5pt;font-weight:700;color:#174f97;margin-bottom:.7mm}
-  .print-activity{margin:.7mm 0;padding:1mm 1.2mm;border:1px solid #d8e0e8;border-radius:3px;break-inside:avoid}
-  .print-answer{min-height:4mm;padding:.7mm 1mm;border:.5px solid #aebdcb;border-radius:2px;background:#fff;white-space:pre-wrap;overflow-wrap:anywhere;margin:.5mm 0}.print-answer.empty{color:transparent;font-style:normal}
-  .print-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:4.35pt;margin-top:.5mm}.print-table th,.print-table td{border:.5px solid #9eacb9;padding:.45mm .35mm;vertical-align:top;overflow-wrap:anywhere}.print-table th{background:#edf4fb;color:#173f72;font-weight:700}.print-table input{font-size:4.7pt!important}
-  .print-check{font-size:5.8pt;margin:.5mm 0}.print-foot{margin-top:1.2mm;padding-top:.7mm;border-top:.5px solid #cdd6de;font-size:5.2pt;color:#637182;text-align:center}.no-print{display:none!important}
-}
+
 
 
 /* Beranda */
@@ -374,153 +351,16 @@ table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid 
 }
 
 /* LKM: A4 portrait, mengalir alami ke beberapa halaman. */
-@media print{
-  @page{size:A4 portrait;margin:10mm}
-  html,body{width:auto!important;height:auto!important;min-height:0!important;overflow:visible!important}
-  #lkmPrintDocument{
-    display:block!important;
-    width:auto!important;
-    max-width:none!important;
-    height:auto!important;
-    max-height:none!important;
-    overflow:visible!important;
-    font-size:9pt!important;
-    line-height:1.30!important;
-  }
-  .print-lkm-header{
-    grid-template-columns:1.35fr 1fr!important;
-    gap:5mm!important;
-    align-items:end!important;
-    padding-bottom:3mm!important;
-    margin-bottom:4mm!important;
-  }
-  .print-lkm-header h1{font-size:16pt!important;line-height:1.12!important;margin:0 0 1.5mm!important}
-  .print-lkm-header p{font-size:8.5pt!important;line-height:1.25!important;margin:.8mm 0!important}
-  .print-lkm-meta{gap:2mm 4mm!important;padding:2.5mm 3mm!important}
-  .print-lkm-meta div{font-size:8.5pt!important}
-  .print-lkm-line{min-width:30mm!important;height:4mm!important}
-  .print-flow{display:block!important;width:100%!important}
-  .print-stage{
-    display:block!important;
-    width:100%!important;
-    margin:0 0 4mm!important;
-    padding:3mm!important;
-    border-radius:5px!important;
-    overflow:visible!important;
-    break-inside:auto!important;
-    page-break-inside:auto!important;
-  }
-  .print-stage[data-print-stage="5"]{display:block!important}
-  .print-stage[data-print-stage="5"]>*{grid-column:auto!important}
-  .print-stage[data-print-stage="5"]>.print-activity:first-of-type{display:block!important}
-  .print-stage h2{font-size:12pt!important;line-height:1.2!important;margin:0 0 2mm!important}
-  .print-stage h4{font-size:10pt!important;margin:2mm 0 1mm!important}
-  .print-stage p,.print-stage li{font-size:9pt!important;line-height:1.35!important}
-  .print-badge{font-size:8pt!important;padding:1mm 2mm!important;margin-bottom:1.5mm!important}
-  .print-activity{
-    margin:2mm 0!important;
-    padding:2.5mm 3mm!important;
-    break-inside:avoid-page!important;
-    page-break-inside:avoid!important;
-  }
-  .print-stage[data-print-stage="2"] .print-activity{break-inside:auto!important;page-break-inside:auto!important}
-  .print-answer{min-height:10mm!important;padding:2mm!important;margin:1.2mm 0!important;font-size:9pt!important;line-height:1.3!important}
-  .print-table{font-size:7.4pt!important;margin-top:1.5mm!important;table-layout:fixed!important}
-  .print-table thead{display:table-header-group}
-  .print-table tr{break-inside:avoid!important;page-break-inside:avoid!important}
-  .print-table th,.print-table td{padding:1.2mm .9mm!important;font-size:7.4pt!important;line-height:1.2!important}
-  .print-check{font-size:9pt!important;margin:1mm 0!important}
-  .print-foot{margin-top:4mm!important;padding-top:2mm!important;font-size:8pt!important;line-height:1.25!important}
-  .no-print{display:none!important}
-}
+
 
 
 
 /* Revisi 6 - area aman kop cetak Lembar Kerja (A4 portrait) */
-@media print{
-  @page{size:A4 portrait;margin:14mm 12mm 12mm 12mm!important}
-  html,body{margin:0!important;padding:0!important}
-  #lkmPrintDocument{
-    width:100%!important;
-    margin:0!important;
-    padding:3mm 3mm 0 3mm!important;
-    box-sizing:border-box!important;
-    position:static!important;
-    transform:none!important;
-  }
-  .print-lkm-header{
-    width:100%!important;
-    max-width:100%!important;
-    box-sizing:border-box!important;
-    padding:1mm 1mm 3mm 1mm!important;
-    margin:0 0 4mm 0!important;
-    overflow:visible!important;
-    break-inside:avoid!important;
-    page-break-inside:avoid!important;
-  }
-  .print-lkm-header>div{min-width:0!important}
-  .print-lkm-header h1{
-    padding:0!important;
-    margin:0 0 1.5mm 0!important;
-    overflow:visible!important;
-  }
-}
+
 
 
 /* Revisi 7 - kop cetak LKM: cegah judul dan identitas saling bertumpuk */
-@media print{
-  .print-lkm-header{
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr) 70mm!important;
-    column-gap:6mm!important;
-    row-gap:0!important;
-    align-items:start!important;
-    width:100%!important;
-    max-width:100%!important;
-  }
-  .print-lkm-header>div:first-child{
-    min-width:0!important;
-    width:auto!important;
-    max-width:100%!important;
-  }
-  .print-lkm-header h1{
-    width:100%!important;
-    max-width:100%!important;
-    font-size:14pt!important;
-    line-height:1.18!important;
-    white-space:normal!important;
-    overflow-wrap:normal!important;
-    word-break:normal!important;
-    hyphens:none!important;
-  }
-  .print-lkm-header p{
-    max-width:100%!important;
-    overflow-wrap:break-word!important;
-  }
-  .print-lkm-meta{
-    width:70mm!important;
-    max-width:70mm!important;
-    min-width:0!important;
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-    gap:2mm 4mm!important;
-    padding:2.5mm 3mm!important;
-    box-sizing:border-box!important;
-    align-self:start!important;
-  }
-  .print-lkm-meta div{
-    min-width:0!important;
-    width:100%!important;
-    overflow:hidden!important;
-  }
-  .print-lkm-line{
-    display:block!important;
-    width:100%!important;
-    min-width:0!important;
-    max-width:100%!important;
-    height:3.5mm!important;
-    margin-top:.5mm!important;
-  }
-}
+
 
 
 /* ===== Revisi 8: mobile + fullscreen — header dan menu selalu aman/terlihat ===== */
@@ -638,19 +478,29 @@ table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid 
 
 
 /* ===== Revisi 9: cetak LKM multi-halaman tetap utuh setelah layout mobile/fullscreen ===== */
+
+
+
+/* ===== Revisi 10: sistem cetak tunggal, A4 portrait, seluruh Lembar Kerja 1–6 ===== */
 @media print{
+  @page{size:A4 portrait;margin:14mm 12mm 12mm 12mm}
+
   html,body{
     width:auto!important;
     height:auto!important;
     min-height:0!important;
     max-height:none!important;
+    margin:0!important;
+    padding:0!important;
     overflow:visible!important;
+    background:#fff!important;
   }
   body{
     display:block!important;
-    margin:0!important;
-    padding:0!important;
+    position:static!important;
   }
+  body>*:not(#lkmPrintDocument){display:none!important}
+
   #lkmPrintDocument{
     display:block!important;
     position:static!important;
@@ -659,22 +509,224 @@ table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid 
     height:auto!important;
     min-height:0!important;
     max-height:none!important;
+    margin:0!important;
+    padding:3mm 3mm 0!important;
     overflow:visible!important;
     contain:none!important;
+    transform:none!important;
+    box-sizing:border-box!important;
+    color:#17263a!important;
+    background:#fff!important;
+    font-family:Arial,Helvetica,sans-serif!important;
+    font-size:9pt!important;
+    line-height:1.30!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
   }
-  #lkmPrintDocument .print-flow{
+  #lkmPrintDocument *{box-sizing:border-box!important}
+
+  .print-lkm-header{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 70mm!important;
+    column-gap:6mm!important;
+    row-gap:0!important;
+    align-items:start!important;
+    width:100%!important;
+    max-width:100%!important;
+    padding:1mm 1mm 3mm!important;
+    margin:0 0 4mm!important;
+    border-bottom:1.5px solid #174f97!important;
+    overflow:visible!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+  .print-lkm-header>div:first-child{
+    min-width:0!important;
+    width:auto!important;
+    max-width:100%!important;
+  }
+  .print-lkm-header h1{
+    width:100%!important;
+    max-width:100%!important;
+    margin:0 0 1.5mm!important;
+    padding:0!important;
+    font-size:14pt!important;
+    line-height:1.18!important;
+    color:#123c70!important;
+    white-space:normal!important;
+    overflow:visible!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+    hyphens:none!important;
+  }
+  .print-lkm-header p{
+    max-width:100%!important;
+    margin:.8mm 0!important;
+    font-size:8.5pt!important;
+    line-height:1.25!important;
+    color:#475b70!important;
+    overflow-wrap:break-word!important;
+  }
+  .print-lkm-meta{
+    display:grid!important;
+    width:70mm!important;
+    max-width:70mm!important;
+    min-width:0!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    gap:2mm 4mm!important;
+    padding:2.5mm 3mm!important;
+    border:1px solid #ccd8e4!important;
+    border-radius:4px!important;
+    align-self:start!important;
+  }
+  .print-lkm-meta div{
+    min-width:0!important;
+    width:100%!important;
+    font-size:8.5pt!important;
+    overflow:hidden!important;
+  }
+  .print-lkm-line{
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    height:3.5mm!important;
+    margin-top:.5mm!important;
+    border-bottom:.5px solid #7b8793!important;
+  }
+
+  .print-flow{
     display:block!important;
     width:100%!important;
     height:auto!important;
+    min-height:0!important;
     max-height:none!important;
     overflow:visible!important;
   }
-  #lkmPrintDocument .print-stage{
+  .print-stage{
     display:block!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0 0 4mm!important;
+    padding:3mm!important;
+    border:1px solid #cbd7e3!important;
+    border-radius:5px!important;
+    overflow:visible!important;
+    break-inside:auto!important;
+    page-break-inside:auto!important;
+  }
+  .print-stage[data-print-stage="5"]{display:block!important}
+  .print-stage[data-print-stage="5"]>*{grid-column:auto!important}
+  .print-stage[data-print-stage="5"]>.print-activity:first-of-type{display:block!important}
+
+  .print-stage h2{
+    margin:0 0 2mm!important;
+    font-size:12pt!important;
+    line-height:1.2!important;
+    color:#12467f!important;
+    break-after:avoid!important;
+    page-break-after:avoid!important;
+  }
+  .print-stage h4{
+    margin:2mm 0 1mm!important;
+    font-size:10pt!important;
+    color:#263a4f!important;
+    break-after:avoid!important;
+    page-break-after:avoid!important;
+  }
+  .print-stage p,.print-stage li{
+    margin:.7mm 0 1.2mm!important;
+    font-size:9pt!important;
+    line-height:1.35!important;
+  }
+  .print-badge{
+    display:inline-block!important;
+    margin:0 0 1.5mm!important;
+    padding:1mm 2mm!important;
+    border:1px solid #c8d9ea!important;
+    border-radius:999px!important;
+    font-size:8pt!important;
+    font-weight:700!important;
+    color:#174f97!important;
+    break-after:avoid!important;
+    page-break-after:avoid!important;
+  }
+  .print-activity{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:2mm 0!important;
+    padding:2.5mm 3mm!important;
+    border:1px solid #d8e0e8!important;
+    border-radius:3px!important;
+    overflow:visible!important;
+    break-inside:avoid-page!important;
+    page-break-inside:avoid!important;
+  }
+  .print-stage[data-print-stage="2"] .print-activity{
+    break-inside:auto!important;
+    page-break-inside:auto!important;
+  }
+  .print-answer{
+    display:block!important;
+    min-height:10mm!important;
     height:auto!important;
     max-height:none!important;
+    margin:1.2mm 0!important;
+    padding:2mm!important;
+    border:.5px solid #aebdcb!important;
+    border-radius:2px!important;
+    background:#fff!important;
+    white-space:pre-wrap!important;
     overflow:visible!important;
+    overflow-wrap:anywhere!important;
+    font-size:9pt!important;
+    line-height:1.3!important;
   }
+  .print-answer.empty{color:transparent!important}
+
+  .print-table{
+    width:100%!important;
+    max-width:100%!important;
+    margin-top:1.5mm!important;
+    border-collapse:collapse!important;
+    table-layout:fixed!important;
+    font-size:7.2pt!important;
+  }
+  .print-table thead{display:table-header-group!important}
+  .print-table tbody{display:table-row-group!important}
+  .print-table tr{
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+  .print-table th,.print-table td{
+    border:.5px solid #9eacb9!important;
+    padding:1.1mm .8mm!important;
+    vertical-align:top!important;
+    font-size:7.2pt!important;
+    line-height:1.2!important;
+    overflow-wrap:anywhere!important;
+  }
+  .print-table th{
+    background:#edf4fb!important;
+    color:#173f72!important;
+    font-weight:700!important;
+  }
+  .print-check{font-size:9pt!important;margin:1mm 0!important}
+  .print-foot{
+    margin-top:4mm!important;
+    padding-top:2mm!important;
+    border-top:.5px solid #cdd6de!important;
+    font-size:8pt!important;
+    line-height:1.25!important;
+    color:#637182!important;
+    text-align:center!important;
+  }
+  .no-print{display:none!important}
 }
 </style>
 </head>
@@ -1361,12 +1413,46 @@ function buildLkmPrintDocument(){
   const flow=`<div class="print-flow">${stageHtml.join('')}</div>`;
   out.innerHTML=`<div class="print-lkm-header"><div><h1>Lembar Kerja - Laboratorium Virtual Matematika</h1><p>Fase D • SMP/MTs • Pembelajaran Mendalam Berbasis Cinta</p><p>Penyelidikan: sisi, rusuk, titik sudut, diagonal bidang, diagonal ruang, dan bidang diagonal.</p></div><div class="print-lkm-meta"><div>Nama: <span class="print-lkm-line"></span></div><div>Kelas: <span class="print-lkm-line"></span></div><div>Sekolah: <span class="print-lkm-line"></span></div><div>Tanggal: <span class="print-lkm-line"></span></div></div></div>${flow}<div class="print-foot">Seluruh sintaks Discovery Learning: Stimulation • Problem Statement • Data Collection • Data Processing • Verification • Generalization</div>`;
 }
+let lkmPrintReady=false;
+function printLkmDesktopIsolated(){
+  const out=$('#lkmPrintDocument');
+  if(!out)return;
+  const oldFrame=document.getElementById('lkmPrintFrame');
+  if(oldFrame)oldFrame.remove();
+  const frame=document.createElement('iframe');
+  frame.id='lkmPrintFrame';
+  frame.setAttribute('title','Dokumen cetak Lembar Kerja');
+  frame.style.cssText='position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0;pointer-events:none;';
+  document.body.appendChild(frame);
+  const doc=frame.contentDocument||frame.contentWindow.document;
+  const css=[...document.querySelectorAll('style')].map(x=>x.textContent).join('\n');
+  doc.open();
+  doc.write(`<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lembar Kerja - Laboratorium Virtual Matematika</title><style>${css}</style></head><body><div id="lkmPrintDocument">${out.innerHTML}</div></body></html>`);
+  doc.close();
+  const runPrint=()=>{
+    const w=frame.contentWindow;
+    if(!w)return;
+    w.onafterprint=()=>setTimeout(()=>frame.remove(),100);
+    w.focus();
+    w.print();
+  };
+  if(doc.readyState==='complete')setTimeout(runPrint,100);
+  else frame.onload=()=>setTimeout(runPrint,100);
+}
 $('#printLkmBtn').onclick=()=>{
   buildLkmPrintDocument();
+  lkmPrintReady=true;
   toast('Lembar Kerja siap. Pada dialog cetak pilih Simpan sebagai PDF / Save as PDF.');
-  setTimeout(()=>window.print(),220);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    if(window.matchMedia('(min-width:761px)').matches)printLkmDesktopIsolated();
+    else setTimeout(()=>window.print(),120);
+  }));
 };
-window.addEventListener('beforeprint',()=>{if($('#lkmPrintDocument'))buildLkmPrintDocument()});
+window.addEventListener('beforeprint',()=>{
+  const out=$('#lkmPrintDocument');
+  if(!lkmPrintReady && out && !out.innerHTML.trim()){buildLkmPrintDocument();lkmPrintReady=true;}
+});
+window.addEventListener('afterprint',()=>{lkmPrintReady=false;});
 
 // LKM storage and stepper
 let stepIndex=0;function setStep(i){stepIndex=Math.max(0,Math.min(5,i));$$('.step').forEach((b,j)=>{b.classList.toggle('active',j===stepIndex);b.classList.toggle('done',j<stepIndex)});$$('.step-panel').forEach((p,j)=>p.classList.toggle('active',j===stepIndex));$('#prevStep').disabled=stepIndex===0;$('#nextStep').textContent=stepIndex===5?'Selesai ✓':'Berikutnya →'}
