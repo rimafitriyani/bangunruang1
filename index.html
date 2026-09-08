@@ -635,6 +635,47 @@ table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid 
     }
   }
 }
+
+
+/* ===== Revisi 9: cetak LKM multi-halaman tetap utuh setelah layout mobile/fullscreen ===== */
+@media print{
+  html,body{
+    width:auto!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  body{
+    display:block!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  #lkmPrintDocument{
+    display:block!important;
+    position:static!important;
+    width:100%!important;
+    max-width:none!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    contain:none!important;
+  }
+  #lkmPrintDocument .print-flow{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  #lkmPrintDocument .print-stage{
+    display:block!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+}
 </style>
 </head>
 <body>
