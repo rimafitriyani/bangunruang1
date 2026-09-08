@@ -521,6 +521,120 @@ table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid 
     margin-top:.5mm!important;
   }
 }
+
+
+/* ===== Revisi 8: mobile + fullscreen — header dan menu selalu aman/terlihat ===== */
+@media(max-width:760px){
+  html,body{
+    width:100%!important;
+    height:100%!important;
+    min-height:100%!important;
+    overflow:hidden!important;
+  }
+  body{
+    padding:0!important;
+    margin:0!important;
+  }
+  .app{
+    width:100%!important;
+    height:100vh!important;
+    min-height:100vh!important;
+    max-height:100vh!important;
+    aspect-ratio:auto!important;
+    border-radius:0!important;
+    border:none!important;
+    box-shadow:none!important;
+    overflow:hidden!important;
+    display:grid!important;
+    grid-template-rows:auto auto minmax(0,1fr)!important;
+  }
+  .topbar{
+    position:relative!important;
+    top:auto!important;
+    z-index:80!important;
+    flex:none!important;
+    padding-top:calc(10px + env(safe-area-inset-top,0px))!important;
+    padding-left:calc(11px + env(safe-area-inset-left,0px))!important;
+    padding-right:calc(11px + env(safe-area-inset-right,0px))!important;
+  }
+  .nav{
+    position:relative!important;
+    top:auto!important;
+    z-index:70!important;
+    width:100%!important;
+    min-width:0!important;
+    flex:none!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    touch-action:pan-x!important;
+    overscroll-behavior-x:contain!important;
+    padding-left:calc(7px + env(safe-area-inset-left,0px))!important;
+    padding-right:calc(7px + env(safe-area-inset-right,0px))!important;
+  }
+  .main{
+    min-width:0!important;
+    min-height:0!important;
+    height:auto!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:contain!important;
+    padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;
+  }
+}
+
+@supports(height:100dvh){
+  @media(max-width:760px){
+    .app{
+      height:100dvh!important;
+      min-height:100dvh!important;
+      max-height:100dvh!important;
+    }
+  }
+}
+
+@media(max-width:760px){
+  #app:fullscreen,
+  #app:-webkit-full-screen{
+    width:100vw!important;
+    height:100vh!important;
+    min-height:100vh!important;
+    max-height:100vh!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    border-radius:0!important;
+    background:var(--bg)!important;
+    grid-template-rows:auto auto minmax(0,1fr)!important;
+  }
+  #app:fullscreen .topbar,
+  #app:-webkit-full-screen .topbar{
+    padding-top:calc(14px + env(safe-area-inset-top,0px))!important;
+    padding-left:calc(11px + env(safe-area-inset-left,0px))!important;
+    padding-right:calc(11px + env(safe-area-inset-right,0px))!important;
+  }
+  #app:fullscreen .nav,
+  #app:-webkit-full-screen .nav{
+    padding-left:calc(7px + env(safe-area-inset-left,0px))!important;
+    padding-right:calc(7px + env(safe-area-inset-right,0px))!important;
+  }
+  #app:fullscreen .main,
+  #app:-webkit-full-screen .main{
+    padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))!important;
+  }
+}
+
+@supports(height:100dvh){
+  @media(max-width:760px){
+    #app:fullscreen,
+    #app:-webkit-full-screen{
+      height:100dvh!important;
+      min-height:100dvh!important;
+      max-height:100dvh!important;
+    }
+  }
+}
 </style>
 </head>
 <body>
