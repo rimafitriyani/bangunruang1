@@ -924,7 +924,7 @@ table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid 
             <button class="tiny-btn" data-toggle="faceDiagonals">╲ Diagonal bidang</button>
             <button class="tiny-btn" data-toggle="spaceDiagonals">⌁ Diagonal ruang</button>
             <button class="tiny-btn" data-toggle="diagonalPlanes">▱ Bidang diagonal</button>
-            <button class="tiny-btn" data-toggle="labels">Aa Label</button>
+            <button class="tiny-btn" data-toggle="labels" aria-pressed="false" title="Tampilkan/sembunyikan label titik sudut pada unsur yang sedang dipilih">Aa Label</button>
           </div>
           <div class="control-label">Rotasi 360°</div>
           <div class="rotation-pair">
@@ -1120,6 +1120,7 @@ const shapes={
 
 let currentShape='prisma3', netMode=false;
 let activeElementType='faces';
+let labelsEnabled=false; // Revisi 12: Label titik sudut adalah overlay independen yang dapat dipasangkan dengan unsur apa pun.
 const rotation={yaw:35,pitch:330};
 const elementSelections={};
 const elementTypeMeta={
@@ -1129,7 +1130,7 @@ const elementTypeMeta={
   faceDiagonals:{label:'Diagonal Bidang',instruction:'Pilih diagonal bidang yang ingin ditampilkan.'},
   spaceDiagonals:{label:'Diagonal Ruang',instruction:'Pilih diagonal ruang yang ingin ditampilkan.'},
   diagonalPlanes:{label:'Bidang Diagonal',instruction:'Pilih bidang diagonal yang ingin ditampilkan warnanya.'},
-  labels:{label:'Label',instruction:'Pilih label titik yang ingin ditampilkan pada bangun.'}
+  labels:{label:'Label',instruction:'Label menampilkan nama titik sudut pembentuk unsur yang sedang dipilih.'}
 };
 const palette=['#1767c9','#12a57a','#e28518','#7a55d5','#d94f7d','#1596b4','#79a929','#e65745','#4559c7','#8f5e28','#a23f9f','#00897b'];
 function poly(points,fill='#eaf3ff',stroke='#1767c9',dash=''){
@@ -1232,6 +1233,28 @@ function spaceDiagonalPairs(shape,solid){
 }
 function pairName(pair,labels){return pair.map(i=>labels[i]).join('')}
 function planeName(idx,labels){return idx.map(i=>labels[i]).join('')}
+function svgVertexLabel(name,p,center=[320,170],color='#174f97'){
+  // Letakkan nama titik sedikit di luar titik sudut agar garis/warna unsur tetap terlihat.
+  const dx=p[0]-center[0],dy=p[1]-center[1],len=Math.hypot(dx,dy)||1;
+  let x=p[0]+dx/len*17,y=p[1]+dy/len*17;
+  const text=String(name??'');
+  const w=Math.max(24,14+text.length*9),h=22;
+  x=Math.max(w/2+4,Math.min(640-w/2-4,x));
+  y=Math.max(h/2+4,Math.min(340-h/2-4,y));
+  const left=x-w/2,top=y-h/2;
+  return `<g class="vertex-name-label" pointer-events="none"><rect x="${left}" y="${top}" width="${w}" height="${h}" rx="7" fill="#fff" fill-opacity=".96" stroke="${color}" stroke-width="1.7"/><text x="${x}" y="${top+15}" text-anchor="middle" font-size="13" font-weight="900" fill="#173f72">${text}</text></g>`
+}
+function selectedVertexIndices(data,type,selected){
+  const ids=new Set();
+  const items=data[type]||[];
+  items.forEach(item=>{
+    if(!selected.has(item.id))return;
+    if(type==='vertices'&&item.pair?.length)ids.add(item.pair[0]);
+    else if((type==='edges'||type==='faceDiagonals'||type==='spaceDiagonals')&&item.pair) item.pair.forEach(i=>ids.add(i));
+    else if((type==='faces'||type==='diagonalPlanes')&&item.idx) item.idx.forEach(i=>ids.add(i));
+  });
+  return [...ids];
+}
 function getElements(shape){
   const solid=getSolid(shape),labels=solid.labels;
   const faces=solid.faces.map((f,i)=>({id:`f${i}`,name:planeName(f.idx,labels),idx:f.idx,color:f.fill}));
@@ -1257,7 +1280,7 @@ function renderElementPanel(){
   panel.style.display='block';
   const data=getElements(currentShape),items=data[activeElementType]||[],meta=elementTypeMeta[activeElementType],selected=ensureSelection(currentShape,activeElementType,items);
   const chips=items.length?items.map((item,i)=>`<button type="button" class="element-chip ${selected.has(item.id)?'active':''}" data-element-id="${item.id}" style="--chip-color:${item.color||palette[i%palette.length]}">${item.name}</button>`).join(''):`<div class="element-empty">${shapes[currentShape].title} tidak memiliki ${meta.label.toLowerCase()}.</div>`;
-  panel.innerHTML=`<div class="element-panel-head"><div class="element-panel-title"><b>${meta.label} — ${shapes[currentShape].title}</b><small>${meta.instruction}</small></div><div class="element-bulk"><button type="button" data-bulk="all">Aktifkan semua</button><button type="button" data-bulk="none">Nonaktifkan semua</button></div></div><div class="element-chips">${chips}</div>`;
+  panel.innerHTML=`<div class="element-panel-head"><div class="element-panel-title"><b>${meta.label} — ${shapes[currentShape].title}</b><small>${meta.instruction}${labelsEnabled?' <b>• Label titik sudut aktif</b>':''}</small></div><div class="element-bulk"><button type="button" data-bulk="all">Aktifkan semua</button><button type="button" data-bulk="none">Nonaktifkan semua</button></div></div><div class="element-chips">${chips}</div>`;
   panel.querySelectorAll('[data-element-id]').forEach(btn=>btn.onclick=()=>{const id=btn.dataset.elementId;if(selected.has(id))selected.delete(id);else selected.add(id);renderShape()});
   panel.querySelector('[data-bulk="all"]')?.addEventListener('click',()=>{items.forEach(x=>selected.add(x.id));renderShape()});
   panel.querySelector('[data-bulk="none"]')?.addEventListener('click',()=>{selected.clear();renderShape()});
@@ -1280,7 +1303,7 @@ function shapeSVG(shape){
   const targetCenterY=padTop+(viewH-padTop-padBottom)/2;
   const cy=targetCenterY+centerY*drawScale;
   const projected=rotated.map(v=>projectPoint(v,drawScale,cx,cy));
-  const faceSelection=ensureSelection(shape,'faces',data.faces),edgeSelection=ensureSelection(shape,'edges',data.edges),vertexSelection=ensureSelection(shape,'vertices',data.vertices),fdSelection=ensureSelection(shape,'faceDiagonals',data.faceDiagonals),sdSelection=ensureSelection(shape,'spaceDiagonals',data.spaceDiagonals),dpSelection=ensureSelection(shape,'diagonalPlanes',data.diagonalPlanes),labelSelection=ensureSelection(shape,'labels',data.labels);
+  const faceSelection=ensureSelection(shape,'faces',data.faces),edgeSelection=ensureSelection(shape,'edges',data.edges),vertexSelection=ensureSelection(shape,'vertices',data.vertices),fdSelection=ensureSelection(shape,'faceDiagonals',data.faceDiagonals),sdSelection=ensureSelection(shape,'spaceDiagonals',data.spaceDiagonals),dpSelection=ensureSelection(shape,'diagonalPlanes',data.diagonalPlanes);
   let out='<svg viewBox="0 0 640 340" preserveAspectRatio="xMidYMin meet" aria-label="Model bangun ruang interaktif dapat diputar 360 derajat ke kiri-kanan dan atas-bawah"><g>';
   if(activeElementType==='diagonalPlanes'){
     data.diagonalPlanes.forEach((pl,i)=>{const on=dpSelection.has(pl.id),ps=pl.idx.map(v=>projected[v]);out+=`<polygon points="${ps.map(p=>`${p[0]},${p[1]}`).join(' ')}" fill="${on?pl.color:'#d6dfe8'}" fill-opacity="${on ? .20 : .025}" stroke="${on?pl.color:'#cbd5df'}" stroke-width="${on?2.7:1.2}" stroke-dasharray="8 6"/>`})
@@ -1297,7 +1320,19 @@ function shapeSVG(shape){
   if(activeElementType==='spaceDiagonals')data.spaceDiagonals.forEach(d=>{const on=sdSelection.has(d.id),a=projected[d.pair[0]],b=projected[d.pair[1]];out+=line(a[0],a[1],b[0],b[1],on?d.color:'#cbd5df',on?'10 6':'5 7',on?4.2:1.5,on?1:.4)});
   data.edges.forEach(e=>{const on=edgeSelection.has(e.id),focus=activeElementType==='edges',a=projected[e.pair[0]],b=projected[e.pair[1]];out+=line(a[0],a[1],b[0],b[1],focus?(on?e.color:'#d2dbe4'):'#40576e','',focus?(on?4.8:1.3):2.4,focus?(on?1:.42):.82)});
   data.vertices.forEach(v=>{const p=projected[v.pair[0]],on=vertexSelection.has(v.id),focus=activeElementType==='vertices';const fill=focus?(on?v.color:'#d4dde5'):'#657b91';const r=focus?(on?7.5:4):4.2;const op=focus?(on?1:.4):.8;out+=`<circle cx="${p[0]}" cy="${p[1]}" r="${r}" fill="${fill}" opacity="${op}" stroke="#fff" stroke-width="2"/>`});
-  if(activeElementType==='labels')data.labels.forEach(l=>{if(!labelSelection.has(l.id))return;const p=projected[l.vertex];out+=`<g><rect x="${p[0]+7}" y="${p[1]-24}" width="24" height="22" rx="7" fill="${l.color}" fill-opacity=".92"/><text x="${p[0]+19}" y="${p[1]-8}" text-anchor="middle" font-size="14" font-weight="900" fill="#fff">${l.name}</text></g>`});
+  // Revisi 12: Label tetap berupa NAMA TITIK SUDUT.
+  // Contoh: pilih rusuk AB -> yang tampil adalah label A dan B pada kedua ujung rusuk;
+  // pilih sisi ABCD -> label A, B, C, D tampil di titik sudut sisi tersebut.
+  if(labelsEnabled){
+    const items=data[activeElementType]||[];
+    const selected=ensureSelection(shape,activeElementType,items);
+    const vertexIds=selectedVertexIndices(data,activeElementType,selected);
+    const modelCenter=[projected.reduce((sum,p)=>sum+p[0],0)/projected.length,projected.reduce((sum,p)=>sum+p[1],0)/projected.length];
+    vertexIds.forEach(i=>{
+      const p=projected[i],label=solid.labels[i];
+      out+=svgVertexLabel(label,p,modelCenter,palette[i%palette.length]);
+    });
+  }
   out+='</g></svg>';return out
 }
 function netSVG(shape){
@@ -1335,8 +1370,18 @@ $$('.shape-btn').forEach(b=>b.onclick=()=>{
   renderShape();setChallengeForCurrent()
 });
 $$('.tiny-btn').forEach(b=>b.onclick=()=>{
-  activeElementType=b.dataset.toggle;
-  $$('.tiny-btn').forEach(x=>x.classList.toggle('on',x===b));
+  const type=b.dataset.toggle;
+  if(type==='labels'){
+    labelsEnabled=!labelsEnabled;
+    b.classList.toggle('on',labelsEnabled);
+    b.setAttribute('aria-pressed',String(labelsEnabled));
+    netMode=false;renderShape();
+    return
+  }
+  activeElementType=type;
+  $$('.tiny-btn').forEach(x=>{if(x.dataset.toggle!=='labels')x.classList.toggle('on',x===b)});
+  const labelBtn=document.querySelector('.tiny-btn[data-toggle="labels"]');
+  if(labelBtn){labelBtn.classList.toggle('on',labelsEnabled);labelBtn.setAttribute('aria-pressed',String(labelsEnabled))}
   netMode=false;renderShape()
 });
 $('#yawRange').oninput=e=>{rotation.yaw=Number(e.target.value);renderShape()};
